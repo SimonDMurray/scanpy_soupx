@@ -1,0 +1,22 @@
+#!/usr/bin/R
+
+library(Seurat)
+library(SoupX)
+library(Matrix)
+theargs <- R.utils::commandArgs(asValues=TRUE)
+raw_path <- theargs$raw
+filt_path <- theargs$filtered
+clusters <- theargs$clusters
+output_path <- theargs$output
+raw = Read10X(raw_path)
+filt = Read10X(filt_path)
+sc = SoupChannel(raw,filt)
+clusters_df = read.csv(clusters, sep="\t", header=FALSE)
+colnames(clusters_df) <- c("barcode", "cluster")
+rownames(clusters_df) <- clusters_df$barcode
+clusters<- clusters_df[2]
+uniq_clus = unique(clusters_df$cluster)
+sc = setClusters(sc,clusters$cluster)
+sc = autoEstCont(sc)
+out = adjustCounts(sc)
+writeMM(out, paste(output_path, "soupx_matrix.mtx", sep="/"))
