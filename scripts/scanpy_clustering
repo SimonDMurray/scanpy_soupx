@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+
+import argparse, os
+import pandas as pd
+import scanpy as sc
+
+my_parser = argparse.ArgumentParser()
+my_parser.add_argument("-i", "--input", default=os.getcwd(), help="Path to input directory")
+my_parser.add_argument("-o", "--output", default=os.getcwd(), help="Path to output clustering information")
+args = my_parser.parse_args()
+adata = sc.read_10x_mtx(args.input, var_names='gene_symbols', cache=True)
+sc.tl.pca(adata)
+sc.pp.neighbors(adata)
+sc.tl.leiden(adata)
+clusters = pd.DataFrame(adata.obs['leiden'])
+clusters.to_csv(f"{args.output}/clusters.tsv", sep="\t", header=False)
