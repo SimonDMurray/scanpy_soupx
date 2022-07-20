@@ -45,7 +45,7 @@ cat $sample_list | while read sample; do
     mkdir -p $output_path/$sample/output/$choice/soupx_results
     echo "Running scanpy clustering for $sample with $choice"
     /software/singularity-v3.5.3/bin/singularity exec -B $mount_options $image \
-      python $scanpy -s=$sample -i=$input_path/$sample/output/$choice/filtered -o=$output_path/$sample/output/$choice/soupx_results
+      python $scanpy -i=$input_path/$sample/output/$choice/filtered -o=$output_path/$sample/output/$choice/soupx_results
     echo "Completed scanpy clustering for $sample with $choice"
     echo "Running soupx for $sample with $choice"
     /software/singularity-v3.5.3/bin/singularity exec -B $mount_options $image \
