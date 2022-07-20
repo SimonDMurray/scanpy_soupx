@@ -26,3 +26,5 @@ Velocyto will contain output of running velocyto on the samples (the RNA velocit
 transcription etc).
 
 To run this script simply do: ./running_soupx -s /path/to/sample-list -i /path/to/starsolo/results -o /path/to/soupx/output
+
+The output will be structured the same as the starsolo results. Each directory will be a sample name, with an outputs subdirectory, then there will be Gene and GeneFull directories. Inside Gene and GeneFull will be a soupx_results directory contains a tab separated file containing cluster information (clusters.tsv) and the output of soupx (soupx_matrix.mtx) 
